@@ -1,1 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oleo+Script:wght@400;700&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap');
+
+/** Colors
+
+#153b1f
+
+**/
+
+/** test code for colors **/
+
+header {
+    background-color: #153b1f;
+}
+
+main {
+    background-color: #545554;
+}
+
+footer {
+    background-color: #b5a642;
+}
