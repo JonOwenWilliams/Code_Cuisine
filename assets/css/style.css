@@ -6,16 +6,77 @@
 
 **/
 
-/** test code for colors **/
-
-header {
-    background-color: #153b1f;
-}
-
 main {
-    background-color: #545554;
+    background-color: #0a003c;
 }
 
 footer {
     background-color: #b5a642;
+}
+
+/** override default styles **/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/** General styles **/
+
+h1 {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Vollkorn", sans-serif;
+}
+
+p {
+
+}
+
+a {
+    text-decoration: none;
+}
+/** main styles **/
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: rgb(211, 211, 211);
+    font-family: "Bebas Neue", 'Vollkorn', 'Oleo Script', sans-serif;
+}
+
+/** header **/
+
+header {
+    padding: 0 1rem;
+    position: fixed;
+    background-color: #153b1f;
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    justify-content: space-between;
+    
+}
+
+.header-title {
+    padding-top: 12px;
+    font-size: 32px;
+}
+
+.navlink {
+    list-style-type: none;
+    letter-spacing: 3px;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+main {
+    margin-top: 60px;
 }
