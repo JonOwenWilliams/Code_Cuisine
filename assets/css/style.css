@@ -66,6 +66,7 @@ header {
     width: 100%;
     align-items: baseline;
     justify-content: space-between;
+    z-index: 99;
 }
 
 .header-title {
@@ -86,7 +87,7 @@ header {
 main {
     margin-top: 60px;
 }
-
+/** hero image **/
 .restimg {
     background: url("../images/resturaunt.jpg") no-repeat center center/cover;
     height: 70vh;
@@ -112,4 +113,10 @@ main {
 }
 .text-content {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
+}
+
+/** about section **/
+
+.about-p {
+    color: #0a003c;
 }
