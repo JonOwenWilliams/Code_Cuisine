@@ -15,7 +15,7 @@
     <!--Styles-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css"  >
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <!-- Header -->
@@ -62,9 +62,14 @@
                 </div>
             </div>
          </section>
+         <section class="d-flex justify-content-center pb-5">
+            <div id="map" class="map-shadow"></div>
+         </section>
     </main>
     <footer>
         <h5>footer</h5>
     </footer>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
+    <script src="assets\js\maps.js"></script>
 </body>
 </html> 
