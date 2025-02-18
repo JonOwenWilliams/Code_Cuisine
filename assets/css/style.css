@@ -3,16 +3,9 @@
 /** Colors
 
 #153b1f
-
+#0a003c
+#b5a642
 **/
-
-/**main {
-    background-color: #0a003c;
-} **/
-
-footer {
-    background-color: #b5a642;
-}
 
 /** override default styles **/
 
@@ -52,7 +45,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    color: rgb(211, 211, 211);
+    color: rgb(255, 255, 255);
     font-family: "Bebas Neue", 'Vollkorn', 'Oleo Script', sans-serif;
 }
 
@@ -86,6 +79,7 @@ header {
 
 main {
     margin-top: 60px;
+    background-color: #f5f0e0;
 }
 /** hero image **/
 .restimg {
@@ -131,4 +125,13 @@ main {
 
 .map-shadow {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
+}
+
+/** footer **/
+
+footer {
+    background-color: #153b1f;
+    color: #b5a642;
+    flex-shrink: 0;
+    padding: 15px;
 }
