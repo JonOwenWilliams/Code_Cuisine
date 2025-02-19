@@ -15,25 +15,54 @@
     <!--Styles-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <!-- Header -->
     <header>
         <nav>
             <ul class="navlink">
-                <li><a href="menu.html"></i>Menu</a></li>
+                <li><a href="{{ url_for('menu') }}">Menu</a></li>
             </ul>
         </nav>
-        <a href="index.html"><h1 class="header-title">Code Cuisine</h1></a>
+        <a href="{{ url_for('index') }}"><h1 class="header-title">Code Cuisine</h1></a>
         <nav>
             <ul class="navlink">
-                <li class="text-end"><a href="booking.html">Booking</a></li>
+                <li class="text-end"><a href="{{ url_for('booking') }}">Booking</a>
             </ul>
         </nav>
     </header>
     <!-- main content -->
     <main>
+        <!-- Hero image/overlay -->
+        <section class="restimg">
+            <div class="rest-overlay">
+                <div class="text-content">
+                    <h1>Code Cuisine</h1>
+                    <p>Where great code meets great food.</p>
+                    <p>Fuel your creativity, one byte at a time!</p>
+                </div>
+            </div>
+        </section>
+        <!-- about section -->
+         <section class="container my-5 about-section">
+            <div class="row align-item-center">
+                <div class="col-md-6">
+                    <p class="about-p">Nestled in the heart of the city, Code Cuisine was born from the late-night brainstorming sessions
+                         of a group of software developers who wanted to merge their two greatest passions—coding and great food.
+                          Frustrated by the lack of inspiring spaces for developers to gather, debug, and dine,
+                          they envisioned that every dish paid homage to the digital world.
+                         What started as a small café for local coders quickly became a vibrant hub where tech lovers,
+                          designers, and foodies alike could fuel their creativity—one byte at a time.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="{{ url_for('static', filename='images/Burger.jpg') }}" alt="Man holding burger" class="img-fluid round-img">
+                </div>
+            </div>
+         </section>
+         <section class="d-flex justify-content-center pb-5">
+            <div id="map" class="map-shadow"></div>
+         </section>
     </main>
     <footer>
         <div class="container">
@@ -64,6 +93,7 @@
         </div>
     </footer>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
-    <script src="assets\js\maps.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
 </body>
-</html> 
+</html>

@@ -81,7 +81,11 @@ main {
     margin-top: 60px;
     background-color: #f5f0e0;
 }
+
+/**----------------------------------- index.html V --------------------------------**/
+
 /** hero image **/
+
 .restimg {
     background: url("../images/resturaunt.jpg") no-repeat center center/cover;
     height: 70vh;
@@ -134,7 +138,9 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
 }
 
-/** footer **/
+/**---------------------index.html ^ / booking.html V ----------------**/
+
+/**--------------------------------footer-----------------------------**/
 
 footer {
     background-color: #153b1f;

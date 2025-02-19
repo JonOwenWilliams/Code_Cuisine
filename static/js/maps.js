@@ -10,3 +10,6 @@ function initMap() {
         title: "Code Cuisine Location"
     });
 }
+
+
+window.initMap = initMap;
