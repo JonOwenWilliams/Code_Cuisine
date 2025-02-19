@@ -115,6 +115,13 @@ main {
     color: #0a003c;
 }
 
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+}
+
 /** map **/
 
 #map {
