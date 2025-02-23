@@ -34,6 +34,121 @@
     </header>
     <!-- main content -->
     <main>
+        <div class="menu-container">
+            <div class="menu-title">Code Cuisine</div>
+            <div class="text-center mb-4">
+                <button class="btn btn-secondary" onclick="showMenu('food-menu')">Food</button>
+                <button class="btn btn-secondary" onclick="showMenu('drinks-menu')">Drinks</button>
+            </div>
+            <!--Food menu-->
+            <div id="food-menu" class="menu-section active">
+                <div class="menu-category">Byte-Sized Starters</div>
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Syntax Sampler</span><span>£9.99</span></div>
+                    <div class="menu-item-description">A debugging-friendly platter featuring crispy mozzarella sticks,
+                         jalapeño poppers, onion rings, and a selection of dipping sauces.</div>
+                    <div class="menu-item-logo">&#127798;</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Loading... Garlic Knots</span><span>£7.49</span></div>
+                    <div class="menu-item-description">Soft, oven-baked garlic knots drizzled with garlic butter and topped with Parmesan,
+                         served with marinara sauce for dipping.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Boolean Bites</span><span>£8.49</span></div>
+                    <div class="menu-item-description">Stuffed mushrooms filled with garlic-herb cream cheese and baked to perfection.</div>
+                    <div class="menu-item-logo">vegetarian</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Null Pointer Nachos</span><span>£9.49</span></div>
+                    <div class="menu-item-description">A stack overflow of crispy tortilla chips loaded with dairy-free cheese,
+                         black beans, guacamole, salsa, and jalapeños.</div>
+                    <div class="menu-item-logo">&#127798; Ⓥ</div>
+                </div>
+
+                <div class="menu-category">Full-Stack Feasts</div>
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Python Pasta</span><span>£12.99</span></div>
+                    <div class="menu-item-description">A spiraled fusion of creamy pesto pasta with grilled chicken and sun-dried tomatoes.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Full-Stack Burger</span><span>£13.99</span></div>
+                    <div class="menu-item-description">A multi-layered beef burger with lettuce, tomato, crispy bacon,
+                         melted cheese, and a special "Dev Sauce" on a brioche bun.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>JavaScript Jalapeño Pizza</span><span>£14.99</span></div>
+                    <div class="menu-item-description">Hand-tossed pizza with spicy jalapeños,
+                         pepperoni, and a mix of mozzarella and cheddar cheese.</div>
+                    <div class="menu-item-logo">&#127798;</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>C++ Curry</span><span>£13.49</span></div>
+                    <div class="menu-item-description">A bold and spicy chicken curry served with fragrant jasmine rice.</div>
+                </div>
+
+                <div class="menu-category">Terminal Treats</div>
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>404 Error: Cookie</span><span>£5.99</span></div>
+                    <div class="menu-item-description">Warm and gooey triple-chocolate cookies served with a scoop of vanilla ice cream.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Binary Brownie</span><span>£6.49</span></div>
+                    <div class="menu-item-description">A rich, fudgy brownie topped with caramel drizzle and a sprinkle of sea salt.</div>
+                </div>
+            </div>
+            <div id="drinks-menu" class="menu-section">
+                <!--Drinks menu-->
+                <div class="menu-category">Alcoholic Drinks</div>
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Code Compiler Cosmo</span><span>£10.99</span></div>
+                    <div class="menu-item-description">A sleek and sophisticated cosmopolitan with a citrus twist.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Recursive Rum Runner</span><span>£12.49</span></div>
+                    <div class="menu-item-description">A never-ending loop of tropical flavors with dark rum, banana liqueur, and pineapple juice.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Kernel Panic Whiskey Sour</span><span>£10.99</span></div>
+                    <div class="menu-item-description">A perfectly balanced whiskey sour with a foamy top layer of egg whites.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>The Overclocked Old Fashioned</span><span>£12.99</span></div>
+                    <div class="menu-item-description">A high-performance classic made with premium bourbon, bitters, and orange zest.</div>
+                </div>
+
+                <div class="menu-category">Non-Alcoholic Drinks</div>
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>The Clean Code Cooler</span><span>£6.49</span></div>
+                    <div class="menu-item-description">A fresh cucumber-mint lemonade that keeps your system running smoothly.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>The Debugging Detox</span><span>£7.49</span></div>
+                    <div class="menu-item-description">A vitamin-packed green smoothie with spinach, apple, ginger, and coconut water.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>The Binary Berry Blast</span><span>£6.99</span></div>
+                    <div class="menu-item-description">A berry-loaded mocktail with blueberries, raspberries, and sparkling water.</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header"><span>Dark Mode Espresso</span><span>£4.49</span></div>
+                    <div class="menu-item-description">A shot of high-intensity espresso for those all-night coding sessions.</div>
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="container">
@@ -65,5 +180,6 @@
     </footer>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 </body>
 </html>
