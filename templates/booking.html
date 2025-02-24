@@ -22,31 +22,85 @@
     <header>
         <nav>
             <ul class="navlink">
-                <li><a href="menu.html"></i>Menu</a></li>
+                <li><a href="{{ url_for('menu') }}">Menu</a></li>
             </ul>
         </nav>
-        <a href="index.html"><h1 class="header-title">Code Cuisine</h1></a>
+        <a href="{{ url_for('index') }}"><h1 class="header-title">Code Cuisine</h1></a>
         <nav>
             <ul class="navlink">
-                <li class="text-end"><a href="booking.html">Booking</a></li>
+                <li class="text-end"><a href="{{ url_for('booking') }}">Booking</a>
             </ul>
         </nav>
     </header>
     <!-- main content -->
     <main>
-        
+        <div class="cc-container">
+            <div class="cc-title">Book Your Table Here!</div>
+            <form id="booking-form">
+                <div id="form-part-1" class="form-section active">
+                    <div class="cc-category">Contact Info</div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="name" name="phone" required>
+                </div>
+                <div id="form-part-2" class="form-section">
+                    <div class="cc-category">Pick you Table</div>
+                    <label for="table">Table Number</label>
+                    <select id="table" name="table" required>
+                        <option value="">Select a Table</option>
+                    </select>
+
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" name="guests" min="1" required>
+                </div>
+                <div id="form-part-3" class="form-section">
+                    <div class="cc-category">Confirm Booking</div>
+                </div>
+                <button type="submit" class="btn btn-secondary">Back</button>
+                <button type="submit" class="btn btn-secondary">Next</button>
+            </form>
+
+            <!--Cancellation form-->
+            <div id="cancellation-section" class="form-section">
+                <form id="cancel-form">
+                    <div class="cc-category">Cancel Your Booking</div>
+                    <label for="cancel-name">Name:</label>
+                    <input type="text" id="cancel-name" required>
+
+                    <label for="cancel-email">Email:</label>
+                    <input type="email" id="cancel-email" required>
+
+                    <label for="cancel-phone">Phone Number:</label>
+                    <input type="text" id="cancel-phone" required>
+
+                    <label for="cancel-table">Table Number:</label>
+                    <input type="number" id="cancel-table" min="1" required>
+
+                    <button type="button" class="btn btn-secondary" onclick="cancelBooking()">Cancel Booking</button>
+                </form>
+            </div>
+        </div>
     </main>
+    <!--footer-->
     <footer>
         <div class="container">
             <div class="row">
+                <!--message-->
                 <div class="col-md-4 text-center text-md-left">
                     <p>Join us for a byte to eat! &#129489;&#8205;&#128187;</p>
                 </div>
+                <!--contact info-->
                 <div class="col-md-4 text-center">
                     <h5>Contact us</h5>
                     <p>Email: CodeCuisine@gmail.com</p>
                     <p>Phone: +123456789</p>
                 </div>
+                <!--social media-->
                 <div class="col-md-4 text-center text-md-right">
                     <h5 class="text-center">Check out our Socials!</h5>
                     <ul class="list-unstyled d-flex justify-content-center">
