@@ -10,6 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookings.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# SQL table layout
+
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +26,8 @@ class Booking(db.Model):
 with app.app_context():
     db.create_all()
 
+# gets available tables
+
 
 @app.route("/available_tables")
 def available_tables():
@@ -32,27 +36,29 @@ def available_tables():
     available = [t for t in all_tables if t not in booked_tables]
     return jsonify(available)
 
+# Book a table
+
 
 @app.route("/book", methods=["POST"])
 def book_table():
     data = request.json
     booking_time = datetime.strptime(data["datetime"], "%Y-%m-%dT%H:%M")
-
+    # Booking limits
     MAX_TABLES = 64
     MAX_PT = 6
     MAX_GUESTS = 225
-
+    # Validates Table Numbers
     if not (1 <= int(data["table"]) <= MAX_TABLES):
         return jsonify({"message": "Invalid table number"}), 400
-
+    # Validates Max Guests Per Table
     if int(data["guests"]) > MAX_PT:
         return jsonify({
          "message": f"Table cannot seat more than {MAX_PT} guests"}), 400
-
+    # Checks For Full Capacity
     total_guests = db.session.query(db.func.sum(Booking.guests)).scalar() or 0
     if total_guests + int(data["guests"]) > MAX_GUESTS:
         return jsonify({"message": "Resturant is at full capacity!"}), 400
-
+    # Checks If Tables Are Already Booked
     exists = db.session.query(Booking.id).filter(
         Booking.table == data["table"],
         Booking.datetime.between(booking_time - timedelta(minutes=140),
@@ -61,7 +67,7 @@ def book_table():
 
     if exists:
         return jsonify({"message": "Table is already booked!"}), 400
-
+    # Creates And Saves New Cusomer Bookings
     new_booking = Booking(
         name=data["name"],
         email=data["email"],
@@ -76,21 +82,20 @@ def book_table():
 
     return jsonify({"message": f"Table {data['table']} is booked!"})
 
+# Cancel Booking
+
 
 @app.route("/cancel", methods=["POST"])
 def cancel_booking():
     data = request.json
 
-    print("cancellation request recived", data)
-
+    # Search For Bookings
     booking = Booking.query.filter_by(
         table=int(data["table"]),
         name=data["name"],
         email=data["email"].lower(),
         phone=data["phone"]
     ).first()
-
-    print("Booking Found", booking)
 
     if booking:
         db.session.delete(booking)
@@ -99,6 +104,8 @@ def cancel_booking():
                         "Your booking has been successfully canceled!"})
     else:
         return jsonify({"message": "No matching booking found!"}), 404
+
+# Routes For Rendering All Pages
 
 
 @app.route("/")
@@ -114,6 +121,8 @@ def menu():
 @app.route("/booking")
 def booking():
     return render_template("booking.html")
+
+# Run The Flask App
 
 
 if __name__ == "__main__":

@@ -1,19 +1,24 @@
 import unittest
 from app import app, db, Booking
 
+# Testing The Booking System
+
 
 class BookingTest(unittest.TestCase):
+    # Set Up For Test And Clears DB Befor Each Test
     def setUp(self):
         self.app = app.test_client()
         with app.app_context():
             db.create_all()
             db.session.query(Booking).delete()
             db.session.commit()
+    # Cleans Up After Each Test
 
     def tearDown(self):
         with app.app_context():
             db.session.query(Booking).delete()
             db.session.commit()
+    # Testing Successfull Bookings
 
     def test_successful_booking(self):
         response = self.app.post('/book', json={
@@ -26,6 +31,7 @@ class BookingTest(unittest.TestCase):
         })
         self.assertEqual(response.status_code, 200)
         self.assertIn("Table 6 is booked!", response.get_json()["message"])
+    # Testing For Double Bookings
 
     def test_double_booking_prevention(self):
 
@@ -53,6 +59,7 @@ class BookingTest(unittest.TestCase):
         self.assertEqual(double_booking.status_code, 400)
         self.assertIn("Table is already booked!",
                       double_booking.get_json()["message"])
+    # Testing for Table Limts
 
     def test_table_limit(self):
 
@@ -67,6 +74,7 @@ class BookingTest(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("Invalid table number",
                       response.get_json()["message"])
+    # Testing Guest Capacity
 
     def test_guest_capacity_limit(self):
 
@@ -91,6 +99,7 @@ class BookingTest(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("Resturant is at full capacity!",
                       response.get_json()["message"])
+    # Testing Successfull Cancellation
 
     def test_sucessfull_cancellation(self):
 
@@ -105,6 +114,7 @@ class BookingTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("successfully canceled",
                       response.get_json()["message"])
+    # Testing Invalid Cancellations
 
     def test_invalid_cancellation(self):
 
