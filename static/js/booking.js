@@ -26,15 +26,29 @@ function fetchAvailableTables() {
         .catch(error => console.error("Error Fetching Available Tables:", error));
 }
 
+//    document.querySelectorAll(".form-section").forEach(section => section.style.display = "none");
+//    document.getElementById(sectionId).style.display = "block";
+
 // Handles The Navigation between the forms
 function showSection(sectionId) {
-    document.querySelectorAll(".form-section").forEach(section => section.classList.remove("active"));
-    document.getElementById(sectionId).classList.add("active");
+    document.querySelectorAll(".form-section").forEach(section => {
+        section.style.display = "none";
+        section.classList.remove("active");
+    });
+
+    let activeSection = document.getElementById(sectionId);
+    if (activeSection) {
+        activeSection.classList.add("active");
+        activeSection.style.display = "flex";
+        activeSection.style.flexDirection = "column";
+        activeSection.style.alignItems = "center";
+        activeSection.style.justifyContent = "center";
+    }
 }
 
 // Checks That All Fields Are Filled Before Going Next
 function goToNextSection(currentSection, nextSection) {
-    let inputs = document.querySelectorAll(`#${currentSection} input`);
+    let inputs = document.querySelectorAll(`#${currentSection} input, #${currentSection} select`);
     let isValid = true;
 
     inputs.forEach(input => {
@@ -44,12 +58,12 @@ function goToNextSection(currentSection, nextSection) {
         } else {
             input.classList.remove("error");
         }
-    })
+    });
 
     if (isValid) {
         showSection(nextSection);
     } else {
-        alert("Please fill in all the required fields before proceeding");
+        alert("Please fill in all required fields before proceeding.");
     }
 }
 
@@ -98,6 +112,16 @@ function validateAndSubmit() {
         errorMessage.style.color = "red"
     })
 }
+// displays only cancellation form
+function showCancellationForm() {
+    document.getElementById("booking-form").style.display = "none";
+    document.getElementById("cancellation-section").style.display = "block";
+}
+
+function showBookingForm() {
+    document.getElementById("booking-form").style.display = "block";
+    document.getElementById("cancellation-section").style.display = "none";
+}
 
 function cancelBooking() {
     let cancelData = {
@@ -117,10 +141,11 @@ function cancelBooking() {
         let cancelMessage = document.getElementById("cancel-message");
         cancelMessage.innerText = data.message;
         cancelMessage.style.color = data.message.includes("successfully") ? "green" : "red";
-
         fetchAvailableTables();
         document.getElementById("cancel-form").reset();
+        showSection("form-part-1");
     })
+
     .catch(error => {
         console.error("Error submitting cancellation:", error);
         let errorMessage = document.getElementById("cancel-message");
