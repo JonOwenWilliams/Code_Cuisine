@@ -28,7 +28,7 @@
         <a href="{{ url_for('index') }}"><h1 class="header-title">Code Cuisine</h1></a>
         <nav>
             <ul class="navlink">
-                <li class="text-end"><a href="{{ url_for('booking') }}">Booking</a>
+                <li class="text-end"><a href="{{ url_for('booking') }}">Booking</a></li>
             </ul>
         </nav>
     </header>
@@ -52,8 +52,9 @@
                 
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
-                        <input type="text" id="name" name="phone" required>
+                        <input type="text" id="phone" name="phone" required>
                     </div>
+                    <button type="button" class="btn btn-outline-warning" onclick="goToNextSection('form-part-1', 'form-part-2')">Next</button>
                 </div>
                 <div id="form-part-2" class="form-section">
                     <div class="cc-category">Pick you Table</div>
@@ -69,12 +70,16 @@
                         <label for="guests">Number of Guests</label>
                         <input type="number" id="guests" name="guests" min="1" required>
                     </div>
+                    <button type="button" class="btn btn-outline-warning" onclick="showSection('form-part-1')">Back</button>
+                    <button type="button" class="btn btn-outline-warning" onclick="goToNextSection('form-part-2', 'form-part-3')">Next</button>
                 </div>
                 <div id="form-part-3" class="form-section">
                     <div class="cc-category">Confirm Booking</div>
+                    <button type="button" class="btn btn-outline-warning btn-lg" onclick="validateAndSubmit()">Submit Booking!</button>
+                    <p id="booking-message" class="mt-1"></p>
+
+                    <button type="button" class="btn btn-outline-warning" onclick="showSection('form-part-2')">Back</button>
                 </div>
-                <button type="submit" class="btn btn-outline-warning">Back</button>
-                <button type="submit" class="btn btn-outline-warning">Next</button>
             </form>
 
             <!--Cancellation form-->
@@ -93,7 +98,8 @@
                     <label for="cancel-table">Table Number:</label>
                     <input type="number" id="cancel-table" min="1" required>
 
-                    <button type="button" class="btn btn-secondary" onclick="cancelBooking()">Cancel Booking</button>
+                    <button type="button" class="btn btn-outline-warning" onclick="cancelBooking()">Cancel Booking</button>
+                    <button type="button" class="btn btn-outline-warning" onclick="showSection('form-part-1')">Back</button>
                 </form>
             </div>
         </div>
@@ -131,7 +137,7 @@
         </div>
     </footer>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
 </body>
 </html>
