@@ -72,8 +72,17 @@
                 </div>
                 <div id="form-part-3" class="form-section">
                     <div class="cc-category">Confirm Booking</div>
-                    <button type="button" class="btn btn-outline-warning btn-lg mt-3" onclick="validateAndSubmit()">Submit Booking!</button>
-                    <p id="booking-message" class="mt-1"></p>
+
+                    <div class="form-group">
+                        <label for="booking-date">Select Date:</label>
+                        <input type="date" id="booking-date" name="booking-date" required>
+
+                        <label for="booking-time">Select time:</label>
+                        <input type="time" id="booking-time" name="booking-time" required>
+                    </div>
+
+                    <button type="button" id="submit-button" class="btn btn-outline-warning btn-lg mt-3" onclick="validateAndSubmit()">Submit Booking!</button>
+                    <p id="booking-message" class="mt-1" style="color: green;"></p>
 
                     <button type="button" class="btn btn-outline-warning mt-3" onclick="showSection('form-part-2')">Back</button>
                 </div>
@@ -140,5 +149,6 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/booking_test.js') }}"></script>
 </body>
 </html>

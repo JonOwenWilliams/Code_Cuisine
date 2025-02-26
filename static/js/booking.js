@@ -2,10 +2,49 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetchAvailableTables();
     setupNavigation();
+    setupTimeSelection();
 });
 
+//setting up time selection
+function setupTimeSelection() {
+    let dateInput = document.getElementById("booking-date");
+    let tableDropdown = document.getElementById("table");
+    let timeDropdown = document.getElementById("booking-time");
+
+    dateInput.addEventListener("change", fetchAvailableTimes);
+    tableDropdown.addEventListener("change", fetchAvailableTimes);
+}
+
+function fetchAvailableTimes() {
+    let table = document.getElementById("table").value;
+    let date = document.getElementById("booking-date").value;
+    let timeDropdown = document.getElementById("booking-time");
+
+    if (!table || !date) return;
+
+    fetch(`/available_times?table=${table}&date=${date}`)
+    .then(response => response.json())
+    .then(times => {
+        timeDropdown.innerHTML = '<option value="">Select a Time</option>';
+        times.forEach(time => {
+                    let option = document.createElement("option");
+        option.value = time;
+        option.textContent = time;
+        timeDropdown.appendChild(option);
+        });
+
+        if (times.length === 0) {
+            timeDropdown.innerHTML = '<option value="">No Available Times</option>';
+        }
+    })
+    .catch(error => console.error("Error Fetching Available Times:", error));
+}
+
+
 // Fetches available tables from app.py and displays them in the drop down in the form
+
 function fetchAvailableTables() {
+
     fetch('/available_tables')
         .then(response => response.json())
         .then(data => {
@@ -75,42 +114,44 @@ function validateAndSubmit() {
         phone: document.getElementById("phone").value,
         table: document.getElementById("table").value,
         guests: document.getElementById("guests").value,
-        datetime: document.getElementById("datetime").value
-    };
+        date: document.getElementById("booking-date").value,
+        time: document.getElementById("booking-time").value
+    }
 
-    // Checks If All Fields Are Filled
+
+    if (!bookingData.name || !bookingData.email || !bookingData.phone || 
+        !bookingData.table || !bookingData.guests || !bookingData.date || !bookingData.time) {
+        console.error("One or more elements are missing from the form.");
+        return;
+    }
+
     if (!bookingData.name || !bookingData.email || !bookingData.phone || 
         !bookingData.table || !bookingData.guests || !bookingData.datetime) {
             alert("Please complete all fields before submitting.");
             return;
     }
-
-    fetch ('/book', {
+    console.log("Submitting Booking Data:", bookingData)
+    fetch('/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingData)
     })
-
     .then(response => response.json())
     .then(data => {
-        //Displays Successfull Message
         let successMessage = document.getElementById("booking-message");
         successMessage.innerText = data.message;
         successMessage.style.color = "green";
 
-        // Resets Form After A Successfull Booking Request
         document.getElementById("booking-form").reset();
         fetchAvailableTables();
         showSection("form-part-1");
     })
-
-    // Displays An Error Message When Something Doesnt Work
     .catch(error => {
         console.error("Error submitting Booking:", error);
         let errorMessage = document.getElementById("booking-message");
-        errorMessage.innerText = "An error occured while processing your booking."
-        errorMessage.style.color = "red"
-    })
+        errorMessage.innerText = "An error occurred while processing your booking.";
+        errorMessage.style.color = "red";
+    });
 }
 // displays only cancellation form
 function showCancellationForm() {

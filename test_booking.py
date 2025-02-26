@@ -27,7 +27,8 @@ class BookingTest(unittest.TestCase):
             "phone": "123456789",
             "table": 6,
             "guests": 4,
-            "datetime": "2025-02-10T19:00"
+            "date": "2025-02-10",
+            "time": "19:00"
         })
         self.assertEqual(response.status_code, 200)
         self.assertIn("Table 6 is booked!", response.get_json()["message"])
@@ -41,7 +42,8 @@ class BookingTest(unittest.TestCase):
             "phone": "123456789",
             "table": 10,
             "guests": 3,
-            "datetime": "2025-02-10T19:00"
+            "date": "2025-02-10",
+            "time": "19:00"
         })
         self.assertEqual(first_booking.status_code, 200)
         print("First Booking Reponse:", first_booking.get_json())
@@ -52,7 +54,8 @@ class BookingTest(unittest.TestCase):
             "phone": "987654321",
             "table": 10,
             "guests": 3,
-            "datetime": "2025-02-10T19:30"
+            "date": "2025-02-10",
+            "time": "19:15"
         })
         print("Double Booking Reponse:", double_booking.get_json())
 
@@ -69,7 +72,8 @@ class BookingTest(unittest.TestCase):
             "phone": "112233445",
             "table": 65,
             "guests": 4,
-            "datetime": "2025-02-10T20:30"
+            "date": "2025-02-25",
+            "time": "10:30"
         })
         self.assertEqual(response.status_code, 400)
         self.assertIn("Invalid table number",
@@ -85,7 +89,8 @@ class BookingTest(unittest.TestCase):
                 "phone": f"12345{i}",
                 "table": i+1,
                 "guests": 5,
-                "datetime": "2025-02-10T07:30"
+                "date": "2025-02-11",
+                "time": "19:30"
             })
 
         response = self.app.post('/book', json={
@@ -94,7 +99,8 @@ class BookingTest(unittest.TestCase):
             "phone": "112233445",
             "table": 11,
             "guests": 6,
-            "datetime": "2025-02-10T20:30"
+            "date": "2025-02-10",
+            "time": "20:30"
         })
         self.assertEqual(response.status_code, 400)
         self.assertIn("Resturant is at full capacity!",
