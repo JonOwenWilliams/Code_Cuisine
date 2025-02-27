@@ -157,9 +157,13 @@ function validateAndSubmit() {
     })
     .then(response => response.json())
     .then(data => {
-        showPopup(`Table ${bookingData.table} booked for ${bookingData.date} at ${bookingData.time}`, "success");
-        document.getElementById("booking-form").reset();
-        fetchAvailableTables();
+        if (data.error ||data.message.includes("Invalid") || data.message.includes("already booked")) {
+            showPopup(`Error: ${data.message}`, "error");
+        } else {
+            showPopup(`Table ${bookingData.table} booked for ${bookingData.date} at ${bookingData.time}`, "success");
+            document.getElementById("booking-form").reset();
+            fetchAvailableTables();
+        }
     })
     .catch(error => {
         console.error("Booking failed:", error);
@@ -193,9 +197,11 @@ function cancelBooking() {
         })
     .then(response => response.json())
     .then(data => {
-        showPopup("Your booking has been successfully canceled!", "success");
-        fetchAvailableTables();
-        document.getElementById("cancel-form").reset();
+        if (data.error || data.message.includes("No matching Booking")) {
+            showPopup(`Error: ${data.message}`, "error");
+        } else {
+            showPopup("Booking cancelled successfully!", "seccess");
+        }
     })
 
     .catch(error => {
