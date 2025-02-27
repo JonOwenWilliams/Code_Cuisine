@@ -86,10 +86,20 @@ def book_table():
     except ValueError:
         print("invalid date or time format")
         return jsonify({"error": "Invalid date or time format"}), 400
+
     # Booking limits
     MAX_TABLES = 64
     MAX_PT = 6
     MAX_GUESTS = 225
+    # opening and closing times
+    opening_time = datetime.strptime("10:00", "%H:%M").time()
+    closing_time = datetime.strptime("22:00", "%H:%M").time()
+    # Validates Booking Time
+    if not (opening_time <= booking_time <= closing_time):
+        print("Invalid booking time")
+        return jsonify({"message":
+                        "Invalid Time! Opening Times Are From 10:00 till 22:00"
+                        }), 400
     # Validates Table Numbers
     if not (1 <= int(data["table"]) <= MAX_TABLES):
         return jsonify({"message": "Invalid table number"}), 400

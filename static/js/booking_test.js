@@ -131,6 +131,52 @@ function testDoubleBooking() {
     .catch(error => console.error("Error: First booking test failed"))
 }
 
+// testing for invalid time
+
+function testBookingWithInvalidtime() {
+    console.log("Testing Booking Submission With Invalid Time....")
+
+    let testBookingData = {
+        name: "Test Test",
+        email: "test@test.com",
+        phone: "123567890",
+        table: 1,
+        guests: "2",
+        date: "2025-02-10",
+        time: "03:00"
+    };
+
+    fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testBookingData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                console.log("Booking With Invalid Time Results:", data);
+
+                if (data.message && data.message.includes("Invalid Time!")) {
+                    console.log("Pass: Booking With an Invalid Time Was Prevented");
+                } else {
+                    console.log("Fail: Expected Time Restriction Message:", data.message);
+                }
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("booking With Invalid Time Test Results:", data);
+
+        if (data.message && data.message.includes("Invalid time")) {
+            console.log("PAss: Booking With An Invalid Time Was Rejected");
+        } else {
+            console.log("Fail: Booking Was Allowed Despite Invalid Time!")
+        }
+    })
+    .catch(error => console.warn("Expected Rejection Due To Invalid Time"));
+}
+
 // function to run all tests 
 function runAllTests() {
     testAvailableTables();
@@ -150,6 +196,10 @@ function runAllTests() {
     setTimeout(() => {
         testCancellation();
     }, 8000);
+
+    setTimeout(() => {
+        testBookingWithInvalidtime()
+    }, 10000);
 
 }
 
