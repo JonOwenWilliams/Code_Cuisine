@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+import re
 
 
 app = Flask(__name__)
@@ -79,6 +80,13 @@ def book_table():
         if field not in data or not data[field]:
             print(f"missing required field: {field}")
             return jsonify({"error": f"Missing required field: {field}"}), 400
+
+    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    if not re.match(email_regex, data["email"]):
+        print("Invalid Email Format!")
+        return jsonify({"message":
+                        "Invalid Email Format! Please Use Valid Email address."
+                        }), 400
 
     try:
         booking_date = datetime.strptime(data["date"], "%Y-%m-%d").date()

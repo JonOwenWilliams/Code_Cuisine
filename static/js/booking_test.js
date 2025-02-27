@@ -176,7 +176,52 @@ function testBookingWithInvalidtime() {
     })
     .catch(error => console.warn("Expected Rejection Due To Invalid Time"));
 }
+// Testing Invalid Email
 
+function testBookingWithInvalidEmail() {
+    console.log("Testing Booking Submission with Invalid Email...")
+
+    let testBookingData = {
+        name: "Test Test",
+        email: "Invalid Email",
+        phone: "123567890",
+        table: 1,
+        guests: "2",
+        date: "2025-02-10",
+        time: "11:00"
+    };
+
+    fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testBookingData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                console.log("Booking With Invalid Email Test Results:", data);
+
+                if (data.message && data.message.includes("Invalid Email Format!")) {
+                    console.log("Pass: Booking With An Invalid Email Was Prevented.");
+                } else {
+                    console.log("Fail: Expected Invalid Email Response got:", data.message);
+                }
+                throw new Error("Expected faliure due to invalid email.")
+            });
+        }
+        return response.json();
+    })
+    .then (data => {
+        console.log("Fail: Booking Was Allowed Despite Invalid Email!", data);
+    })
+    .catch(error => {
+        if (error.message === "Expected faliure due to invalid email."){
+            // I want this to do nothing
+        } else {
+            console.warn("Unexpected error i email test:", error.message);
+        }
+    });
+}
 // function to run all tests 
 function runAllTests() {
     testAvailableTables();
@@ -200,6 +245,10 @@ function runAllTests() {
     setTimeout(() => {
         testBookingWithInvalidtime()
     }, 10000);
+
+    setTimeout(() => {
+        testBookingWithInvalidEmail();
+    }, 12000);
 
 }
 
