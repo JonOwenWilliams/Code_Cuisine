@@ -95,9 +95,10 @@ function showSection(sectionId) {
 }
 // creates and displays a popup notification
 function showPopup(message, type) {
+    console.log(`showPopup() called with message: "${message}" and type: "${type}"`)
     let popup = document.createElement("div");
     popup.innerText = message;
-    popup.className = `popup-message${type}`;
+    popup.className = `popup-message ${type}`;
     document.body.appendChild(popup);
 
     setTimeout(() => {
