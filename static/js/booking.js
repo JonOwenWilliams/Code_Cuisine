@@ -93,6 +93,21 @@ function showSection(sectionId) {
     }
 
 }
+// creates and displays a popup notification
+function showPopup(message, type) {
+    let popup = document.createElement("div");
+    popup.innerText = message;
+    popup.className = `popup-message${type}`;
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.style.opacity = "0"
+        setTimeout(() => {
+            popup.remove();
+        }, 500);
+    }, 3000);
+}
+
 
 // Checks That All Fields Are Filled Before Going Next
 function goToNextSection(currentSection, nextSection) {
@@ -130,11 +145,10 @@ function validateAndSubmit() {
 
     if (!bookingData.name || !bookingData.email || !bookingData.phone || 
         !bookingData.table || !bookingData.guests || !bookingData.date || !bookingData.time) {
-        console.error("One or more elements are missing from the form.");
+        alert("One or more elements are missing from the form.");
         return;
     }
 
-    console.log("Submitting Booking Data:", bookingData)
     fetch('/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -142,30 +156,16 @@ function validateAndSubmit() {
     })
     .then(response => response.json())
     .then(data => {
-        let successMessage = document.getElementById("booking-message");
-        if (successMessage) {
-            successMessage.innerText = data.message || "Booking Successful!";
-            successMessage.style.color = "green";
-            successMessage.style.display = "block";
-            successMessage.style.visibility = "visible";
-            successMessage.style.opacity = "1";
-        } else {
-            console.error("Error: Booking-message element not found in html")
-        }            
-
-
-
+        showPopup(`Table ${bookingData.table} booked for ${bookingData.date} at ${bookingData.time}`, "success");
         document.getElementById("booking-form").reset();
         fetchAvailableTables();
-        showSection("form-part-1");
     })
     .catch(error => {
-        console.error("Error submitting Booking:", error);
-        let errorMessage = document.getElementById("booking-message");
-        errorMessage.innerText = "An error occurred while processing your booking.";
-        errorMessage.style.color = "red";
+        console.error("Booking failed:", error);
+        showPopup("An error occured while processing your booking.", "error");
     });
 }
+
 // displays only cancellation form
 function showCancellationForm() {
     document.getElementById("booking-form").style.display = "none";
@@ -192,25 +192,13 @@ function cancelBooking() {
         })
     .then(response => response.json())
     .then(data => {
-        let cancelMessage = document.getElementById("cancel-message");
-
-        if (cancelMessage) {
-            cancelMessage.innerText = data.message || "Cancellation Successfull!";
-            cancelMessage.style.color = data.message.includes("successfully") ? "green" : "red";
-            cancelMessage.style.display = "block"            
-        } else {
-            console.error("Error: cancle message element not found in html")
-        }
-
+        showPopup("Your booking has been successfully canceled!", "success");
         fetchAvailableTables();
         document.getElementById("cancel-form").reset();
-        showSection("form-part-1");
     })
 
     .catch(error => {
-        console.error("Error submitting cancellation:", error);
-        let errorMessage = document.getElementById("cancel-message");
-        errorMessage.innerText = "an error occured while processing your cancellation.";
-        errorMessage.style.color = "red";
+        console.error("Cancellation Failed:", error);
+        showPopup("An Error occured while processing you cancellation.", "error")
     });
 }

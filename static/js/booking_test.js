@@ -37,23 +37,14 @@ function testBooking() {
     .then(response => response.json())
     .then(data => {
         console.log("Booking Test Results:", data);
-        // Checks to see if message is displayed
-        let successMessage = document.getElementById("booking-message");
 
-        if(!successMessage) {
-            console.log("No Success Message Found In HTML")
+        if (data.message && data.message.includes("booked")) {
+            console.log(`Pass: Booking confirmed for Table ${testBookingData.table} on ${testBookingData.date} at ${testBookingData.time}`);
         } else {
-            console.log("Found successMessage element:", successMessage);
-            console.log("successMessage.innerText BEFORE update:", successMessage.innerText);
-        }
-
-        if (successMessage && successMessage.innerText.includes("booked")) {
-            console.log("Pass: Booking Success Message is Displayed");
-        } else {
-            console.log("Fail: No Booking Success Message is Displayed");
+            console.log("Fail: No Booking confirmation received.");
         }
     })
-    .catch(error => console.error("Booking Test Failed", error))
+    .catch(error => console.error("Booking Test Failed", error));
 }
 
 function testCancellation() {
@@ -75,15 +66,13 @@ function testCancellation() {
     .then(data => {
         console.log("Cancellation Test Results:", data);
 
-        //Checks for successful cancel message
-        let cancelMessage = document.getElementById("cancel-message");
-        if (cancelMessage && cancelMessage.innerText.includes("Successfully Canceled")) {
-            console.log("Pass: cancellation message is shown");
+        if (data.message && data.message.includes("successfully canceled")) {
+            console.log("Pass: Booking successfully cancled");
         } else {
-            console.log("Fail: did not display any messsage");
+            console.log("Fail: No cancellation confirmation recived.");
         }
     })
-    .catch(error => console.error("Cancellation Test Error:", error));
+    .catch(error => console.error("Error: Cancellation Test Error:", error));
 }
 
 // function to run all tests 
