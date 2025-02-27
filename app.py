@@ -67,9 +67,25 @@ def available_times():
 
 @app.route("/book", methods=["POST"])
 def book_table():
-    data = request.json
-    booking_date = datetime.strptime(data["date"], "%Y-%m-%d").date()
-    booking_time = datetime.strptime(data["time"], "%H:%M").time()
+    print("Raw Request Data:", request.data)
+    data = request.get_json()
+    print("Parsed JSON data:", data)
+    if not data:
+        return jsonify({"error": "invalid JSON format"}), 400
+
+    required_fields = ["name", "email", "phone", "table", "guests", "date",
+                       "time"]
+    for field in required_fields:
+        if field not in data or not data[field]:
+            print(f"missing required field: {field}")
+            return jsonify({"error": f"Missing required field: {field}"}), 400
+
+    try:
+        booking_date = datetime.strptime(data["date"], "%Y-%m-%d").date()
+        booking_time = datetime.strptime(data["time"], "%H:%M").time()
+    except ValueError:
+        print("invalid date or time format")
+        return jsonify({"error": "Invalid date or time format"}), 400
     # Booking limits
     MAX_TABLES = 64
     MAX_PT = 6
@@ -99,6 +115,7 @@ def book_table():
     ).first()
 
     if exists:
+        print("table already booked")
         return jsonify({"message": "Table is already booked!"}), 400
     # Creates And Saves New Cusomer Bookings
     new_booking = Booking(
@@ -114,6 +131,7 @@ def book_table():
     db.session.add(new_booking)
     db.session.commit()
 
+    print("booking successful!")
     return jsonify({"message": f"Table {data['table']} is booked!"})
 
 # Cancel Booking
@@ -155,6 +173,22 @@ def menu():
 @app.route("/booking")
 def booking():
     return render_template("booking.html")
+
+
+# Error Handlers
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({"error": "Bad Request"}), 400
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Resource Not Found"}), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({"error": "Internal Server Error"}), 500
 
 # Run The Flask App
 

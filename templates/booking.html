@@ -82,7 +82,7 @@
                     </div>
 
                     <button type="button" id="submit-button" class="btn btn-outline-warning btn-lg mt-3" onclick="validateAndSubmit()">Submit Booking!</button>
-                    <p id="booking-message" class="mt-1" style="color: green;"></p>
+                    <p id="booking-message" class="mt-1" style="color: green; display: none;"></p>
 
                     <button type="button" class="btn btn-outline-warning mt-3" onclick="showSection('form-part-2')">Back</button>
                 </div>
@@ -109,7 +109,7 @@
                         <button type="button" class="btn btn-outline-warning mr-3" onclick="cancelBooking()">Cancel Booking</button>
                         <button type="button" class="btn btn-outline-warning" onclick="showSection('form-part-1'), showBookingForm()">Back</button>
                     </div>
-                    <p id="cancel-message"></p>
+                    <p id="cancel-message" class="mt-1" style="color: red; display: none;"></p>
                 </form>
             </div>
         </div>
@@ -146,7 +146,6 @@
             </div>
         </div>
     </footer>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL7kY1Zcnj_GfjdJBAFPJP_bFZZtGV7tA&callback=initMap"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
     <script src="{{ url_for('static', filename='js/booking_test.js') }}"></script>

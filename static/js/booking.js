@@ -1,7 +1,6 @@
 // Runs when the Booking.html is loaded
 document.addEventListener("DOMContentLoaded", function () {
     fetchAvailableTables();
-    setupNavigation();
     setupTimeSelection();
 });
 
@@ -13,6 +12,7 @@ function setupTimeSelection() {
 
     dateInput.addEventListener("change", fetchAvailableTimes);
     tableDropdown.addEventListener("change", fetchAvailableTimes);
+    timeDropdown.addEventListener("change", fetchAvailableTimes);
 }
 
 function fetchAvailableTimes() {
@@ -83,6 +83,15 @@ function showSection(sectionId) {
         activeSection.style.alignItems = "center";
         activeSection.style.justifyContent = "center";
     }
+
+    if (sectionId !== "form-part-1") {
+        let successMessage = document.getElementById("booking-message");
+        let cancelMessage = document.getElementById("cancel-message")
+
+        if (successMessage) successMessage.style.display = "none";
+        if (cancelMessage) cancelMessage.style.display = "none";        
+    }
+
 }
 
 // Checks That All Fields Are Filled Before Going Next
@@ -125,11 +134,6 @@ function validateAndSubmit() {
         return;
     }
 
-    if (!bookingData.name || !bookingData.email || !bookingData.phone || 
-        !bookingData.table || !bookingData.guests || !bookingData.datetime) {
-            alert("Please complete all fields before submitting.");
-            return;
-    }
     console.log("Submitting Booking Data:", bookingData)
     fetch('/book', {
         method: 'POST',
@@ -139,8 +143,17 @@ function validateAndSubmit() {
     .then(response => response.json())
     .then(data => {
         let successMessage = document.getElementById("booking-message");
-        successMessage.innerText = data.message;
-        successMessage.style.color = "green";
+        if (successMessage) {
+            successMessage.innerText = data.message || "Booking Successful!";
+            successMessage.style.color = "green";
+            successMessage.style.display = "block";
+            successMessage.style.visibility = "visible";
+            successMessage.style.opacity = "1";
+        } else {
+            console.error("Error: Booking-message element not found in html")
+        }            
+
+
 
         document.getElementById("booking-form").reset();
         fetchAvailableTables();
@@ -180,8 +193,15 @@ function cancelBooking() {
     .then(response => response.json())
     .then(data => {
         let cancelMessage = document.getElementById("cancel-message");
-        cancelMessage.innerText = data.message;
-        cancelMessage.style.color = data.message.includes("successfully") ? "green" : "red";
+
+        if (cancelMessage) {
+            cancelMessage.innerText = data.message || "Cancellation Successfull!";
+            cancelMessage.style.color = data.message.includes("successfully") ? "green" : "red";
+            cancelMessage.style.display = "block"            
+        } else {
+            console.error("Error: cancle message element not found in html")
+        }
+
         fetchAvailableTables();
         document.getElementById("cancel-form").reset();
         showSection("form-part-1");

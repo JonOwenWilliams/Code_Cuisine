@@ -23,9 +23,10 @@ function testBooking() {
         name: "Test Test",
         email: "test@test.com",
         phone: "123567890",
-        table: "1",
+        table: 1,
         guests: "2",
-        datetime: "2025-02-15T19:00"
+        date: "2025-02-10",
+        time: "17:30"
     };
 
     fetch('/book', {
@@ -41,6 +42,9 @@ function testBooking() {
 
         if(!successMessage) {
             console.log("No Success Message Found In HTML")
+        } else {
+            console.log("Found successMessage element:", successMessage);
+            console.log("successMessage.innerText BEFORE update:", successMessage.innerText);
         }
 
         if (successMessage && successMessage.innerText.includes("booked")) {
@@ -52,10 +56,48 @@ function testBooking() {
     .catch(error => console.error("Booking Test Failed", error))
 }
 
+function testCancellation() {
+    console.log("Testing Cancellation...");
+
+    let cancelData = {
+        name: "Test Test",
+        email: "test@test.com",
+        phone: "123567890",
+        table: 1
+    };
+
+    fetch('/cancel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(cancelData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Cancellation Test Results:", data);
+
+        //Checks for successful cancel message
+        let cancelMessage = document.getElementById("cancel-message");
+        if (cancelMessage && cancelMessage.innerText.includes("Successfully Canceled")) {
+            console.log("Pass: cancellation message is shown");
+        } else {
+            console.log("Fail: did not display any messsage");
+        }
+    })
+    .catch(error => console.error("Cancellation Test Error:", error));
+}
+
 // function to run all tests 
 function runAllTests() {
     testAvailableTables();
-    testBooking()
+
+    setTimeout(() => {
+        testBooking();    
+    }, 3000);
+
+    setTimeout(() => {
+        testCancellation();
+    }, 6000);
+
 }
 
 document.addEventListener("DOMContentLoaded", runAllTests);
