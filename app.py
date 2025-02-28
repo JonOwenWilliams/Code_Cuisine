@@ -218,7 +218,7 @@ def get_bookings():
 # ---------------------------------------------------update booking for admin
 
 
-@app.route("/update_booking/<int:id>", methods=["POST"])
+@app.route("/update_booking/<int:id>", method=["POST"])
 def update_booking(id):
     data = request.get_json()
     booking = Booking.query.get(id)
