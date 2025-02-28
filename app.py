@@ -1,10 +1,17 @@
-from flask import Flask, render_template, jsonify, request
+import os
+from flask import Flask, render_template, jsonify, request, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import re
 
+load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
+
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookings.db'
@@ -23,6 +30,7 @@ class Booking(db.Model):
     guests = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
+    status = db.Column(db.String(20), default="pending")
 
 
 with app.app_context():
@@ -143,7 +151,8 @@ def book_table():
         table=int(data["table"]),
         guests=int(data["guests"]),
         date=booking_date,
-        time=booking_time
+        time=booking_time,
+        status="Pending"
     )
 
     db.session.add(new_booking)
@@ -176,6 +185,56 @@ def cancel_booking():
         return jsonify({"message": "No matching booking found!"}), 404
 
 # Routes For Rendering All Pages
+
+# ---------------------------------------------------admin login
+
+
+@app.route("/admin_login", method=["POST"])
+def admin_login():
+    data = request.get_json()
+    if (data["username"] == ADMIN_USERNAME and
+            data["password"] == ADMIN_PASSWORD):
+        session["admin_logged_in"] = True
+        return jsonify({"success": True})
+    return jsonify({"success": False})
+
+# ---------------------------------------------------fetch booking for admin
+
+
+@app.route("/api/bookings")
+def get_bookings():
+    bookings = Booking.query.all()
+    return jsonify([
+        {
+            "id": b.id,
+            "name": b.name,
+            "phone": b.phone,
+            "table": b.table,
+            "time": b.time.strftime("%H:%M"),
+            "status": b.status
+        } for b in bookings
+    ])
+
+# ---------------------------------------------------update booking for admin
+
+
+@app.route("/update_booking/<int:id>", methods=["POST"])
+def update_booking(id):
+    data = request.get_json()
+    booking = Booking.query.get(id)
+    if booking:
+        booking.status = data["status"]
+        db.session.commit()
+        return jsonify({"message": "Booking updated successfully"})
+    return jsonify({"message": "Booking not found"}), 404
+
+# ---------------------------------------------------admin logout
+
+
+@app.route("/admin_logout")
+def admin_logout():
+    session.pop("admin_logged_in", None)
+    return jsonify({"success": True})
 
 
 @app.route("/")
