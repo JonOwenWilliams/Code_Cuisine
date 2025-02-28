@@ -189,7 +189,7 @@ def cancel_booking():
 # ---------------------------------------------------admin login
 
 
-@app.route("/admin_login", method=["POST"])
+@app.route("/admin_login", methods=["POST"])
 def admin_login():
     data = request.get_json()
     if (data["username"] == ADMIN_USERNAME and
@@ -218,7 +218,7 @@ def get_bookings():
 # ---------------------------------------------------update booking for admin
 
 
-@app.route("/update_booking/<int:id>", method=["POST"])
+@app.route("/update_booking/<int:id>", methods=["POST"])
 def update_booking(id):
     data = request.get_json()
     booking = Booking.query.get(id)
