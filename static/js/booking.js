@@ -2,15 +2,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetchAvailableTables();
     setupTimeSelection();
-
-    // admin event listeners
-    document.getElementById("admin-login-btn").addEventListener("click", showAdminLogin);
-    document.getElementById("admin-login-btn-cancel").addEventListener("click", cancelAdminLogin);
-    document.getElementById("admin-login-submit").addEventListener("click", loginAdmin);
-    document.getElementById("logout-btn").addEventListener("click", logoutAdmin);
 });
-
 //setting up time selection
+
 function setupTimeSelection() {
     let dateInput = document.getElementById("booking-date");
     let tableDropdown = document.getElementById("table");
@@ -97,106 +91,6 @@ function showSection(sectionId) {
 
 }
 
-// admin login system
-
-function showAdminLogin() {
-    document.getElementById("admin-login-section").style.display = "block";
-    document.getElementById("booking-form").style.display = "none";
-    document.getElementById("cancellation-section").style.display = "none";
-    document.getElementById("admin-login-btn").style.display = "none";
-}
-
-function cancelAdminLogin() {
-    document.getElementById("admin-login-section").style.display = "none";
-    document.getElementById("booking-form").style.display = "block";
-    document.getElementById("cancellation-section").style.display = "block";
-    document.getElementById("admin-login-btn").style.display = "none";
-}
-
-// handles admin login
-
-function loginAdmin() {
-    let username = document.getElementById("admin-username").value;
-    let password = document.getElementById("admin-password").value;
-
-    fetch('/admin_login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById("booking-form").style.display = "none";
-            document.getElementById("cancellation-section").style.display = "none";
-            document.getElementById("admin-login-section").style.display = "none";
-            document.getElementById("admin-login-btn").style.display = "none";
-            document.getElementById("admin-login-btn-cancel").style.display = "none";
-
-            setTimeout(() => {
-                document.getElementById("admin-dashboard").style.display = "block";                
-                fetchAdminBookings();
-            }, 100);
-        } else {
-            alert("Invalid login credentials");
-        }
-    })
-    .catch(error => {
-        console.error("Admin Login Error:", error);
-        alert("An Error occurred while logging in. Please try again.")
-    })
-}
-
-// fetch bookings for admin table
-function fetchAdminBookings() {
-    fetch("/api/bookings")
-    .then(response => response.json())
-    .then(bookings => {
-        let tableBody = document.getElementById("admin-booking-list");
-        tableBody.innerHTML = "";
-        bookings.forEach(booking => {
-            let row = `<tr>
-                            <td>${booking.table}</td>
-                <td>${booking.name}</td>
-                <td>${booking.phone}</td>
-                <td>${booking.time}</td>
-                <td id="status-${booking.id}">${booking.status}</td>
-                <td>
-                    <button onclick="updateBooking(${booking.id}, 'Arrived')" class="btn btn-outline-success">Arrived</button>
-                    <button onclick="updateBooking(${booking.id}, 'Canceled')" class="btn btn-outline-danger">Cancel</button>
-                    <button onclick="updateBooking(${booking.id}, 'Left')" class="btn btn-outline-warning">Left</button>
-                </td>
-            </tr>`
-            tableBody.innerHTML += row;
-        });
-    });
-}
-
-// updates booking status
-function updateBooking(id, status) {
-    fetch(`/update_booking/${id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({status}),
-    })
-    .then(response => response.json())
-    .then(() => {
-        document.getElementById(`status-${id}`).textContent = status;
-    });
-}
-
-// logout feature  for admin
-function logoutAdmin() {
-    document.getElementById("admin-dashboard").style.display = "none";
-    document.getElementById("admin-login-btn").style.display = "block";
-    document.getElementById("admin-login-btn-cancel").style.display = "none";
-    document.getElementById("admin-login-section").style.display = "none";
-}
-
-document.getElementById("logout-btn").addEventListener("click",function () {
-    logoutAdmin();
-});
-
 // creates and displays a popup notification
 function showPopup(message, type) {
     console.log(`showPopup() called with message: "${message}" and type: "${type}"`)
@@ -274,6 +168,12 @@ function validateAndSubmit() {
         showPopup("An error occured while processing your booking.", "error");
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("admin-login-btn").addEventListener("click", function () {
+        window.location.href = "/admin";
+    });
+});
 
 // displays only cancellation form
 function showCancellationForm() {
