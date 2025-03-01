@@ -41,10 +41,15 @@ with app.app_context():
 
 @app.route("/available_tables")
 def available_tables():
-    booked_tables = [b.table for b in Booking.query.all()]
-    all_tables = list(range(1, 65))
-    available = [t for t in all_tables if t not in booked_tables]
-    return jsonify(available)
+    try:
+        booked_tables = [b.table for b in Booking.query.all()]
+        all_tables = list(range(1, 65))
+        available = [t for t in all_tables if t not in booked_tables]
+        return jsonify(available)
+    except Exception as e:
+        print(f"Error in available_tables(): {e}")
+        return jsonify({"Error": "Server error fetching available tables"}),
+        500
 
 # gets availbe times
 
@@ -196,7 +201,7 @@ def admin_login():
             data["password"] == ADMIN_PASSWORD):
         session["admin_logged_in"] = True
         return jsonify({"success": True})
-    return jsonify({"success": False})
+    return jsonify({"success": False}), 401
 
 # ---------------------------------------------------fetch booking for admin
 
@@ -250,6 +255,11 @@ def menu():
 @app.route("/booking")
 def booking():
     return render_template("booking.html")
+
+
+@app.route("/admin")
+def admin_page():
+    return render_template("admin.html")
 
 
 # Error Handlers

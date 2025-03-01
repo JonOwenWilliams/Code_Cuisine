@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // admin event listeners
     document.getElementById("admin-login-btn").addEventListener("click", showAdminLogin);
+    document.getElementById("admin-login-btn-cancel").addEventListener("click", cancelAdminLogin);
     document.getElementById("admin-login-submit").addEventListener("click", loginAdmin);
     document.getElementById("logout-btn").addEventListener("click", logoutAdmin);
 });
@@ -100,6 +101,16 @@ function showSection(sectionId) {
 
 function showAdminLogin() {
     document.getElementById("admin-login-section").style.display = "block";
+    document.getElementById("booking-form").style.display = "none";
+    document.getElementById("cancellation-section").style.display = "none";
+    document.getElementById("admin-login-btn").style.display = "none";
+}
+
+function cancelAdminLogin() {
+    document.getElementById("admin-login-section").style.display = "none";
+    document.getElementById("booking-form").style.display = "block";
+    document.getElementById("cancellation-section").style.display = "block";
+    document.getElementById("admin-login-btn").style.display = "none";
 }
 
 // handles admin login
@@ -116,13 +127,24 @@ function loginAdmin() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            document.getElementById("booking-form").style.display = "none";
+            document.getElementById("cancellation-section").style.display = "none";
             document.getElementById("admin-login-section").style.display = "none";
-            document.getElementById("admin-dashboard").style.display = "block";
-            fetchAdminBookings();
+            document.getElementById("admin-login-btn").style.display = "none";
+            document.getElementById("admin-login-btn-cancel").style.display = "none";
+
+            setTimeout(() => {
+                document.getElementById("admin-dashboard").style.display = "block";                
+                fetchAdminBookings();
+            }, 100);
         } else {
             alert("Invalid login credentials");
         }
-    });
+    })
+    .catch(error => {
+        console.error("Admin Login Error:", error);
+        alert("An Error occurred while logging in. Please try again.")
+    })
 }
 
 // fetch bookings for admin table
@@ -167,7 +189,13 @@ function updateBooking(id, status) {
 function logoutAdmin() {
     document.getElementById("admin-dashboard").style.display = "none";
     document.getElementById("admin-login-btn").style.display = "block";
+    document.getElementById("admin-login-btn-cancel").style.display = "none";
+    document.getElementById("admin-login-section").style.display = "none";
 }
+
+document.getElementById("logout-btn").addEventListener("click",function () {
+    logoutAdmin();
+});
 
 // creates and displays a popup notification
 function showPopup(message, type) {
@@ -256,6 +284,8 @@ function showCancellationForm() {
 function showBookingForm() {
     document.getElementById("booking-form").style.display = "block";
     document.getElementById("cancellation-section").style.display = "none";
+    document.getElementById("admin-login-btn").style.display = "block";
+    document.getElementById("admin-login-btn-cancel").style.display = "none";
 }
 
 function cancelBooking() {
