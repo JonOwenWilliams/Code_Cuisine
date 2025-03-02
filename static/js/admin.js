@@ -32,6 +32,44 @@ function loginAdmin() {
     })
     .catch(error => {
         console.error("Admin Login Error:", error);
-    })
+    });
+}
 
+// fetching bookings for admin dashboard
+function fetchAdminBookings() {
+    fetch("/api/bookings")
+    .then(response => response.json())
+    .then(bookings => {
+        let tableBody = document.getElementById("admin-booking-list");
+        tableBody.innerHTML = "";
+        bookings.forEach(booking => {
+            let row = `<tr>
+                            <td>${booking.table}</td>
+                            <td>${booking.name}</td>
+                            <td>${booking.phone}</td>
+                            <td>${booking.time}</td>
+                            <td id="status-${booking.id}">${booking.status}</td>
+                            <td>
+                                <button onclick="updateBooking(${booking.id}, 'Arrived')" class="btn btn-outline-success">Arrived</button>
+                                <button onclick="updateBooking(${booking.id}, 'Canceled')" class="btn btn-outline-danger">Cancel</button>
+                                <button onclick="updateBooking(${booking.id}, 'Left')" class="btn btn-outline-warning">Left</button>
+                            </td>
+                        </tr>`;
+            tableBody.innerHTML += row;
+        });
+    });
+}
+
+// changes booking status
+
+function updateBooking(id, status) {
+    fetch(`/update_booking/${id}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+    })
+    .then(response => response.json())
+    .then(() => {
+        document.getElementById(`status-${id}`).textContent = status;
+    });
 }
