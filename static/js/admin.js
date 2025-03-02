@@ -48,7 +48,7 @@ function fetchAdminBookings() {
             tableBody.innerHTML = "<tr><td colspan='6'>No Bookings Available.</td></tr>"
         }
         bookings.forEach(booking => {
-            let row = `<tr>
+            let row = `<tr id="booking-row-${booking.id}">
                             <td>${booking.table}</td>
                             <td>${booking.name}</td>
                             <td>${booking.phone}</td>
@@ -79,7 +79,13 @@ function adminCancelBooking(id) {
     .then(response => response.json())
     .then(data => {
         alert(data.message);
-        document.getElementById(`booking-row-${id}`).remove();
+        let rowElement = document.getElementById(`booking-row-${id}`);
+        if (rowElement) {
+            rowElement.remove();
+        } else {
+            console.warn(`Row with ID booking-row-${id} not found.`)
+            fetchAdminBookings();
+        }
     })
     .catch(error => {
         console.error("Error removing booking:", error);
