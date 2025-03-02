@@ -338,6 +338,12 @@ main {
     color: #b5a642;
 }
 
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
 /**--------------------------------footer-----------------------------**/
 
 footer {

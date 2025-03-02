@@ -241,6 +241,19 @@ def admin_logout():
     session.pop("admin_logged_in", None)
     return jsonify({"success": True})
 
+# ---------------------------------------------------admin cancel
+
+
+@app.route("/admin_cancel/<int:id>", methods=["DELETE"])
+def admin_cancel_booking(id):
+    booking = Booking.query.get(id)
+    if booking:
+        db.session.delete(booking)
+        db.session.commit()
+        return jsonify({
+            "message": f"Booking for table {booking.table} has been removed."})
+    return jsonify({"message": "Booking not found."})
+
 
 @app.route("/")
 def index():

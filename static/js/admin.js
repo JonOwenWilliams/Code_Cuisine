@@ -56,7 +56,7 @@ function fetchAdminBookings() {
                             <td id="status-${booking.id}">${booking.status}</td>
                             <td>
                                 <button onclick="updateBooking(${booking.id}, 'Arrived')" class="btn btn-outline-success">Arrived</button>
-                                <button onclick="updateBooking(${booking.id}, 'Canceled')" class="btn btn-outline-danger">Cancel</button>
+                                <button onclick="adminCancelBooking(${booking.id}, 'Canceled')" class="btn btn-outline-danger">Cancel</button>
                                 <button onclick="updateBooking(${booking.id}, 'Left')" class="btn btn-outline-warning">Left</button>
                             </td>
                         </tr>`;
@@ -67,6 +67,23 @@ function fetchAdminBookings() {
     .catch(error => {
         console.error("Error fetching bookings:", error);
     })
+}
+
+// cancle bookings from admin dashboard
+function adminCancelBooking(id) {
+    if (!confirm("Are you sure you want to delete this booking")) return;
+
+    fetch(`/admin_cancel/${id}`, {
+        method: "DELETE"
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        document.getElementById(`booking-row-${id}`).remove();
+    })
+    .catch(error => {
+        console.error("Error removing booking:", error);
+    });
 }
 
 // changes booking status
