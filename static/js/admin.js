@@ -42,6 +42,11 @@ function fetchAdminBookings() {
     .then(bookings => {
         let tableBody = document.getElementById("admin-booking-list");
         tableBody.innerHTML = "";
+
+        if (bookings.length === 0) {
+            console.log("No Booking found");
+            tableBody.innerHTML = "<tr><td colspan='6'>No Bookings Available.</td></tr>"
+        }
         bookings.forEach(booking => {
             let row = `<tr>
                             <td>${booking.table}</td>
@@ -57,7 +62,11 @@ function fetchAdminBookings() {
                         </tr>`;
             tableBody.innerHTML += row;
         });
-    });
+        console.log("Admin bookings collected")
+    })
+    .catch(error => {
+        console.error("Error fetching bookings:", error);
+    })
 }
 
 // changes booking status

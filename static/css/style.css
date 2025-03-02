@@ -318,6 +318,17 @@ main {
     margin-top: 5px;
 }
 
+/**--------------------------------admin.html-------------------------**/
+
+.cc-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+.cc-table {
+    color: #b5a642;
+    letter-spacing: 2px;
+}
+
 /**--------------------------------footer-----------------------------**/
 
 footer {

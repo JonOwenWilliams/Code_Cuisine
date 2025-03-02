@@ -36,7 +36,7 @@
     <main class="main-content">
         <div class="cc-container">
             <!--Admin login section-->
-            <div id="admin-login-section" style="display: block;">
+            <div id="admin-login-section">
                 <div class="cc-title">Admin Login</div>
                 <div class="form-group">
                     <label for="admin-username">Username:</label>
@@ -48,26 +48,26 @@
                     <button id="admin-login-submit" class="btn btn-outline-success mt-3">Login</button>
                     <button id="admin-login-btn-cancel" class="btn btn-outline-danger mt-3">Cancel</button>
                 </div>
+            </div>
                 <!--admin Dashboard-->
-                <div id="admin-dashboard" style="display: none;">
-                    <div class="cc-title">Admin Dashboard</div>
-                    <table class="table table-bordered border-warning">
-                        <thead>
-                            <tr>
-                                <th>Table</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-booking-list">
-                            <!--Inputs data from bookinf.db-->
-                        </tbody>
-                    </table>
-                    <button id="logout-btn" class="btn btn-outline-danger">Logout</button>
-                </div>
+            <div id="admin-dashboard" style="display: none;">
+                <div class="cc-title">Admin Dashboard</div>
+                <table class="table table-bordered cc-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Table</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-booking-list">
+                        <!--Inputs data from bookinf.db-->
+                    </tbody>
+                </table>
+                <button id="logout-btn" class="btn btn-outline-danger">Logout</button>
             </div>
         </div>
     </main>
