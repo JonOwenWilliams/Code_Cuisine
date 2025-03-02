@@ -73,3 +73,10 @@ function updateBooking(id, status) {
         document.getElementById(`status-${id}`).textContent = status;
     });
 }
+
+// logout feature
+
+function logoutAdmin() {
+    document.getElementById("admin-dashboard").style.display = "none";
+    document.getElementById("admin-login-section").style.display = " block";
+}
