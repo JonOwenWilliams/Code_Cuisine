@@ -10,9 +10,24 @@ function setupTimeSelection() {
     let tableDropdown = document.getElementById("table");
     let timeDropdown = document.getElementById("booking-time");
 
+    let now = new Date();
+    let today = now.toISOString().split("T")[0];
+    dateInput.setAttribute("min",today);
+    
     dateInput.addEventListener("change", fetchAvailableTimes);
     tableDropdown.addEventListener("change", fetchAvailableTimes);
     timeDropdown.addEventListener("change", fetchAvailableTimes);
+
+    dateInput.addEventListener("change", function() {
+        let selectedDate = new Date(this.value);
+        if (selectedDate.toDateString() === now.toDateString()) {
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            timeDropdown.setAttribute("min", `${hours}:${minutes}`);
+        } else {
+            timeDropdown.removeAttribute("min");
+        }
+    });
 }
 
 function fetchAvailableTimes() {
