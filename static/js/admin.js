@@ -35,17 +35,34 @@ function loginAdmin() {
     });
 }
 
+//date selection
+document.addEventListener("DOMContentLoaded", function(){
+    document.getElementById("admin-booking-date").addEventListener("change", fetchAdminBookings);
+});
+
 // fetching bookings for admin dashboard
 function fetchAdminBookings() {
-    fetch("/api/bookings")
+    let selectedDate = document.getElementById("admin-booking-date").value;
+    
+    let url = "/api/bookings";
+    if (selectedDate) {
+        url += `?date=${selectedDate}`;
+    }
+
+    fetch(url)
     .then(response => response.json())
     .then(bookings => {
+        if (!Array.isArray(bookings)) {
+            console.error("API returned a non-array response:", bookings);
+            return;
+        }
+
         let tableBody = document.getElementById("admin-booking-list");
         tableBody.innerHTML = "";
 
         if (bookings.length === 0) {
             console.log("No Booking found");
-            tableBody.innerHTML = "<tr><td colspan='6'>No Bookings Available.</td></tr>"
+            tableBody.innerHTML = "<tr><td colspan='6'>No Bookings Available For This Date.</td></tr>"
         }
         bookings.forEach(booking => {
             let row = `<tr id="booking-row-${booking.id}">
@@ -66,8 +83,14 @@ function fetchAdminBookings() {
     })
     .catch(error => {
         console.error("Error fetching bookings:", error);
-    })
+    });
 }
+// REMEMBER JON YOU ARE CURRENTLY FIXING THE SPECIFIC DATE ISSUE ON ADMIN FORM
+// clears table and reloads data for date changes
+document.getElementById("clear-date-filter").addEventListener("click", function() {
+    document.getElementById("admin-booking-date").value = "";
+    fetchAdminBookings();
+});
 
 // cancle bookings from admin dashboard
 function adminCancelBooking(id) {

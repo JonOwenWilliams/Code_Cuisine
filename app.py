@@ -208,7 +208,20 @@ def admin_login():
 
 @app.route("/api/bookings")
 def get_bookings():
-    bookings = Booking.query.all()
+    date_filter = request.args.get("date")
+
+    if date_filter:
+        try:
+            selected_date = datetime.strptime(date_filter, "%Y-%m-%d").date()
+            bookings = Booking.query.filter_by(date=selected_date).all()
+        except ValueError:
+            return jsonify({"error": "Invalid date format"}), 400
+    else:
+        bookings = Booking.query.all()
+
+    if not bookings:
+        return jsonify([])
+
     return jsonify([
         {
             "id": b.id,
