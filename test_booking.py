@@ -133,6 +133,27 @@ class BookingTest(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn("No matching booking found!",
                       response.get_json()["message"])
+    # Testing invalid booking time
+
+    def test_invalid_booking_times(self):
+        response = self.app.post('/book', json={
+            "name": "Late Night",
+            "email": "latenight@test.com",
+            "phone": "999999999",
+            "table": 2,
+            "guests": 2,
+            "date": "2025-02-15",
+            "time": "23:00"
+        })
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("Invalid Time! Opening Times Are From 10:00 till 22:00",
+                      response.get_json()["message"])
+# testing available tables
+
+    def test_available_table(self):
+        response = self.app.get('/available_tables?date=2025-02-15')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.get_json(), list)
 
 
 if __name__ == '__main__':
