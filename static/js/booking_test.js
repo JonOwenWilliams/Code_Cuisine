@@ -224,7 +224,37 @@ function testBookingWithInvalidEmail() {
         }
     });
 }
+// test for booking past closing time
+function testBookingOutsideOpeningHours() {
+    console.log("Testing Booking Outside Opening Hours...");
 
+    let InvalidTimeBooking = {
+        name: "late Test",
+        email: "late@test.com",
+        phone: "123567890",
+        table: 1,
+        guests: "2",
+        date: "2025-02-10",
+        time: "23:00"
+    };
+
+    fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testBookingData)
+    })
+    .then(response => response.json())
+    .then(date => {
+        console.log("Booking Outside Opening Hiurs Test Results:",data)
+
+        if (data.message && data.message.includes("Invalid Time! Opening Times Are From 10:00 till 22:00")) {
+            console.log("Pass: Booking outside openeing hours was prevented.")
+        } else {
+            console.log("Error: Booking was allowed outside of opening hours")
+        }
+    })
+    .catch(error => console.error("Error: Booking outside opening hours test failed", error));
+}
 // function to run all tests 
 function runAllTests() {
     testAvailableTables();
