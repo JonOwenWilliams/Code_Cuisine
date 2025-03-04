@@ -241,19 +241,69 @@ function testBookingOutsideOpeningHours() {
     fetch('/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testBookingData)
+        body: JSON.stringify(InvalidTimeBooking)
     })
-    .then(response => response.json())
-    .then(date => {
-        console.log("Booking Outside Opening Hiurs Test Results:",data)
-
-        if (data.message && data.message.includes("Invalid Time! Opening Times Are From 10:00 till 22:00")) {
-            console.log("Pass: Booking outside openeing hours was prevented.")
-        } else {
-            console.log("Error: Booking was allowed outside of opening hours")
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                console.log("Booking Outside Opening Hiurs Test Results:",data)
+                if (data.message && data.message.includes("Invalid Time! Opening Times Are From 10:00 till 22:00")) {
+                    console.log("Pass: Booking outside openeing hours was prevented.")
+                } else {
+                    console.log("Error: Booking was allowed outside of opening hours")
+                }
+            });
         }
+        return response.json();
     })
     .catch(error => console.error("Error: Booking outside opening hours test failed", error));
+}
+// Test for missing fields
+function testBookingWithMissingFields() {
+    console.log("Testing Booking Submission With Missing Fields...")
+
+    let incompleteBookingData = {
+        name: "",
+        email: "test@test.com",
+        phone: "123567890",
+        table: 1,
+        guests: "2",
+        date: "2025-02-10",
+        time: "15:00"
+    };
+
+    fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(incompleteBookingData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                console.log("Missing Fields Test Results:", data);
+
+                if ((data.message && data.message.includes("Missing required field: name")) || 
+                    (data.error && data.error.includes("Missing required field: name"))) {
+                    console.log("Pass: Booking with missing fields was successfully prevented")
+
+                    throw new Error("Expected faliure");
+                } else {
+                    console.log("Fail: Unexpected response, expecting missing field error")
+                }
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Fail: Booking was still allowed in with missing fields")
+    })
+    .catch(error => {
+        if (error.message === "Expected faliure") {
+
+        } else {
+            console.error("Error:Missing fields test failed", error)
+        }
+    });
 }
 // function to run all tests 
 function runAllTests() {
@@ -267,9 +317,13 @@ function runAllTests() {
 
     setTimeout(() => {testCancellation();}, 8000);
 
-    setTimeout(() => {testBookingWithInvalidtime()}, 10000);
+    setTimeout(() => {testBookingWithInvalidtime();}, 10000);
 
     setTimeout(() => {testBookingWithInvalidEmail();}, 12000);
+
+    setTimeout(() => {testBookingOutsideOpeningHours();}, 14000);
+
+    setTimeout(() => {testBookingWithMissingFields();}, 16000)
 
 }
 
