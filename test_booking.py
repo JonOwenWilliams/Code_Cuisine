@@ -154,6 +154,12 @@ class BookingTest(unittest.TestCase):
         response = self.app.get('/available_tables?date=2025-02-15')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.get_json(), list)
+# testing available times
+
+    def test_available_times(self):
+        response = self.app.get('/available_times?table=5&date=2025-02-15')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.get_json(), list)
 
 
 if __name__ == '__main__':
