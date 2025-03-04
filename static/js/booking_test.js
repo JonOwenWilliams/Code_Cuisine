@@ -323,7 +323,7 @@ function runAllTests() {
 
     setTimeout(() => {testBookingOutsideOpeningHours();}, 14000);
 
-    setTimeout(() => {testBookingWithMissingFields();}, 16000)
+    setTimeout(() => {testBookingWithMissingFields();}, 16000);
 
 }
 

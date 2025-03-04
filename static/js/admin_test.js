@@ -53,6 +53,21 @@ function testAdminDateSelector() {
         }
     }, 2000);
 }
+// Testing admin logout
+function testAdminLogout() {
+    console.log("Testing admin logout");
+
+    logoutAdmin();
+
+    setTimeout(() => {
+        if (document.getElementById("admin-dashboard").style.display === "none" &&
+            document.getElementById("admin-login-section").style.display === "block") {
+                console.log("Pass; Admin logout worked correctly");
+            } else {
+                console.log("Fail: admin logout did not work as expected");
+            }
+    }, 500)
+}
 
 // function to run all tests
 
@@ -60,9 +75,11 @@ function runAllTests () {
 
     testAdminLogin();
 
-    setTimeout(() => {testFetchAdminBookings();}, 2000)
+    setTimeout(() => {testFetchAdminBookings();}, 2000);
 
-    setTimeout(() => {testAdminDateSelector();}, 4000)
+    setTimeout(() => {testAdminDateSelector();}, 4000);
+    
+    setTimeout(() => {testAdminLogout();}, 6000);
 
 }
 
