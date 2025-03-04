@@ -2,7 +2,9 @@
 function testAvailableTables() {
     console.log(" Testing for Available Tables...");
 
-    fetch('/available_tables')
+    let testDate = "2025-02-10"
+
+    fetch(`/available_tables?date=${testDate}`)
         .then(response => response.json())
         .then(data => {
             console.log("Available Tables Test:", data);
@@ -12,7 +14,7 @@ function testAvailableTables() {
                 console.log("pass: Only unbooked tables show up on dropdown");
             }
         })
-        .catch(error => console.error("Error in Availble Tables Test", error));
+        .catch(error => console.error("Error in Available Tables Test", error));
 }
 
 // Second Test : testing if submission works and displays its message
@@ -222,33 +224,22 @@ function testBookingWithInvalidEmail() {
         }
     });
 }
+
 // function to run all tests 
 function runAllTests() {
     testAvailableTables();
 
-    setTimeout(() => {
-        testBooking();    
-    }, 2000);
+    setTimeout(() => {testBooking();}, 2000);
 
-    setTimeout(() => {
-        testCancellation();
-    }, 4000);
+    setTimeout(() => {testCancellation();}, 4000);
 
-    setTimeout(() => {
-        testDoubleBooking();
-    }, 6000);
+    setTimeout(() => {testDoubleBooking();}, 6000);
 
-    setTimeout(() => {
-        testCancellation();
-    }, 8000);
+    setTimeout(() => {testCancellation();}, 8000);
 
-    setTimeout(() => {
-        testBookingWithInvalidtime()
-    }, 10000);
+    setTimeout(() => {testBookingWithInvalidtime()}, 10000);
 
-    setTimeout(() => {
-        testBookingWithInvalidEmail();
-    }, 12000);
+    setTimeout(() => {testBookingWithInvalidEmail();}, 12000);
 
 }
 
