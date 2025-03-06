@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // populating the table
 function populateTables() {
-    let tableDropdown = document.getElementById("tables");
+    let tableDropdown = document.getElementById("table");
     if (!tableDropdown) {
         console.error("Table dropdown not found!");
         return;
@@ -72,13 +72,8 @@ function fetchAvailableTimes() {
 
         times.forEach(time => {
             let option = document.createElement("option");
-        option.value = timeSlot.time;
-        option.textContent = `${timeSlot.time} (Remaining Slots: ${timeSlot.remaining_slots})`;
-
-        if (timeSlot.remaining_slots <= 0) {
-            option.disabled = true
-        }
-
+        option.value = time;
+        option.textContent = `${time}`;
         timeDropdown.appendChild(option);
         });
 
