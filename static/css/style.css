@@ -323,6 +323,12 @@ main {
     letter-spacing: 2px;
 }
 
+#admin-login-section {
+    position: relative;
+    max-height: 560px;
+    height: 100vh;
+}
+
 .admin-login-inputs {
     position: absolute;
     top: 50%;
