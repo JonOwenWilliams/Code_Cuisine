@@ -5,7 +5,7 @@ from app import app, db, Booking
 
 
 class BookingTest(unittest.TestCase):
-    # Set Up For Test And Clears DB Befor Each Test
+    # Set Up For Test And Clears DB Before Each Test
     def setUp(self):
         self.app = app.test_client()
         with app.app_context():
@@ -107,7 +107,7 @@ class BookingTest(unittest.TestCase):
                       response.get_json()["message"])
     # Testing Successfull Cancellation
 
-    def test_sucessfull_cancellation(self):
+    def test_successfull_cancellation(self):
 
         self.test_successful_booking()
 
