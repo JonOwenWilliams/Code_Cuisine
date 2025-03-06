@@ -1,8 +1,26 @@
 // Runs when the Booking.html is loaded
 document.addEventListener("DOMContentLoaded", function () {
+    populateTables();
     fetchAvailableTables();
     setupTimeSelection();
 });
+// populating the table
+function populateTables() {
+    let tableDropdown = document.getElementById("tables");
+    if (!tableDropdown) {
+        console.error("Table dropdown not found!");
+        return;
+    }
+    tableDropdown.innerHTML = '<option value="">Select a Table</option>';
+
+    for (let i = 1; i <= 64; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.textContent = `Table ${i}`;
+        tableDropdown.appendChild(option)
+    }
+    console.log("All tables populated")
+}
 //setting up time selection
 
 function setupTimeSelection() {
@@ -91,17 +109,18 @@ function setupEventListeners() {
 function fetchAvailableTables() {
     let dateInputElement = document.getElementById("booking-date").value.trim();
     if (!dateInputElement) return;   
-    
-    console.log(`Date Selected: ${dateInput}`);
 
-    fetch(`/available_tables?date=${dateInput}`)
+    console.log(`Fetching tables for date: ${dateInputElement}`);
+
+    fetch(`/available_tables?date=${dateInputElement}`)
         .then(response => response.json())
         .then(data => {
+            console.log("Available Tables API Response:", data);
             let tableDropdown = document.getElementById("table");
             tableDropdown.innerHTML = '<option value="">Select a Table</option>';
 
             if (!Array.isArray(data)) {
-                console.error("Backend Error:",data.error || "unexpected error");
+                console.error("Backend Error:", data.error || "Unexpected error");
                 return;
             }
 
@@ -109,13 +128,15 @@ function fetchAvailableTables() {
                 tableDropdown.innerHTML = '<option value="">No Tables Available</option>';
                 return;
             }
+
             data.forEach(table => {
                 let option = document.createElement("option");
                 option.value = table.table_id;
                 option.textContent = `Table ${table.table_id} (${table.remaining_slots} slots left)`;
                 tableDropdown.appendChild(option);
             });
-            console.log("Tables Update");
+
+            console.log("Tables updated successfully");
         })
         .catch(error => console.error("Error Fetching Available Tables:", error));
 }
@@ -210,7 +231,10 @@ function validateAndSubmit() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.error ||data.message.includes("Invalid") || data.message.includes("already booked")) {
+        
+        if (data.message.includes("Invalid Email Format")) {
+            showPopup("Error: Invalid Email Format", "error");
+        } else if (data.error ||data.message.includes("Invalid") || data.message.includes("already booked")) {
             showPopup(`Error: ${data.message}`, "error");
         } else {
             showPopup(`Table ${bookingData.table} booked for ${bookingData.date} at ${bookingData.time}`, "success");

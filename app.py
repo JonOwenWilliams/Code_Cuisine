@@ -44,7 +44,7 @@ def available_tables():
     try:
         date = request.args.get("date")
         if not date:
-            return jsonify({"error": "Date Is Required"}), 400
+            return jsonify({"error": "Date is required"}), 400
 
         selected_date = datetime.strptime(date, "%Y-%m-%d").date()
         table_bookings = db.session.query(
@@ -52,15 +52,16 @@ def available_tables():
         ).filter(Booking.date == selected_date).group_by(Booking.table).all()
 
         MAX_BOOKING_PER_TABLE = 6
-
         booked_counts = {table: count for table, count in table_bookings}
         all_tables = list(range(1, 65))
         available = [
-            {"table_id": table, "remaining_slots": MAX_BOOKING_PER_TABLE -
-             booked_counts.get(table, 0)}
-            for table in all_tables if booked_counts.get(table, 0) <
-            MAX_BOOKING_PER_TABLE
-            ]
+            {"table_id": table, "remaining_slots":
+             MAX_BOOKING_PER_TABLE - booked_counts.get(table, 0)}
+            for table in all_tables if booked_counts.get(table, 0)
+            < MAX_BOOKING_PER_TABLE
+        ]
+
+        print(f"Returning available tables for {date}: {available}")
         return jsonify(available)
     except Exception as e:
         print(f"Error in available_tables(): {e}")
