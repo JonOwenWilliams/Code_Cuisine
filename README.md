@@ -5,8 +5,8 @@
 2. Agile Workflow
 3. MVC Structure
 4. Features
-5.
-6.
+5. Testing
+6. Technologies Used
 7.
 8.
 9.
@@ -61,5 +61,33 @@ screenshot of admin page
 4. Form Validation.
     - screenshot of both invalid email and ensure all fiels are filled
 5. Menu Display.
-    -screenshots of menu and buttons
+    - screenshots of menu and buttons
 6. Secure admin page.
+
+
+## Testing
+
+I manually tested all features to ensure proper responses and along side that i also did some unit testing to ensure the features work as intended.
+
+screenshots of testing both js and python and results
+
+
+## Technologies Used
+
+### For my front end code i used:
+  - HTML5
+  - CSS3
+  - Bootstrap 4
+  - JavaScript
+
+### For my back end i used:
+  - Python
+  - Flask
+  - SQLAlchemy
+
+### For Tools and Libraries i used :
+  - GitHub
+  - Flask API
+  - Lighthouse
+  - Pycodestyle (for python testing)
+  - W3C Validator
