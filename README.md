@@ -91,3 +91,19 @@ screenshots of testing both js and python and results
   - Lighthouse
   - Pycodestyle (for python testing)
   - W3C Validator
+
+
+  ## Lighthouse Performance scores 
+
+  display all screenshots 
+
+  1. Index.html
+
+
+  2. Menu.html
+
+
+  3. Booking.html
+
+
+  4. Admin.html
