@@ -35,3 +35,17 @@ I also added comments below to help me understand what was needed for each featu
 
 screenshot of card with comment below !
 
+
+## MVC Structure
+
+This project is structured in a way that users input their data from the interface, It is then procecced through controlled logic, and finaly stored and retrived in a database.
+
+Customers will enter their details on the booking page.
+screen shot of booking page
+
+for it all to be stored in the data base.
+screen shot of db code
+
+collected and displayed on the admin page for admins to make changes if needed
+screenshot of admin page
+
