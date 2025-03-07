@@ -3,8 +3,8 @@
 ## Table of content for README.
 1. Project Overview
 2. Agile Workflow
-3.
-4.
+3. MVC Structure
+4. Features
 5.
 6.
 7.
@@ -49,3 +49,17 @@ screen shot of db code
 collected and displayed on the admin page for admins to make changes if needed
 screenshot of admin page
 
+
+## Features
+1. Table Reservation.
+    - screenshot of table reservation
+2. Real-Time Availability.
+    - The system updates as bookings are places and prevents double bookings.
+3. Booking status update.
+    - screenshot of admin dashboard
+    - Admins can mark customers and arrived or left and delete bookings if required.
+4. Form Validation.
+    - screenshot of both invalid email and ensure all fiels are filled
+5. Menu Display.
+    -screenshots of menu and buttons
+6. Secure admin page.
