@@ -284,6 +284,8 @@ def admin_cancel_booking(id):
             "message": f"Booking for table {booking.table} has been removed."})
     return jsonify({"message": "Booking not found."})
 
+# navigation
+
 
 @app.route("/")
 def index():

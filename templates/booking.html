@@ -38,6 +38,7 @@
             <div class="cc-title">Book Your Table Here!</div>
             <button type="button" class="btn btn-outline-warning btn-lg mb-2" onclick="showCancellationForm()" id="cancel-button">Cancel Your Booking Here!</button>
             <form id="booking-form">
+                <!--part 1 of form-->
                 <div id="form-part-1" class="form-section active form-layout">
                     <div class="cc-category">Contact Info</div>
                     <div class="form-group">
@@ -53,6 +54,7 @@
                     <button type="button" class="btn btn-outline-warning" onclick="goToNextSection('form-part-1', 'form-part-2')">Next</button>
                 </div>
                 <div id="form-part-2" class="form-section">
+                <!--part 2 of form-->
                     <div class="cc-category">Pick Your Table</div>
                     <div class="form-group">
                         <label for="table">Table Number</label>
@@ -71,6 +73,7 @@
                     </div>
                 </div>
                 <div id="form-part-3" class="form-section">
+                <!--part 3 of form-->
                     <div class="cc-category">Confirm Booking</div>
 
                     <div class="form-group">
@@ -149,6 +152,7 @@
             </div>
         </div>
     </footer>
+    <!--scripts-->
     <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
 </body>
 </html>
