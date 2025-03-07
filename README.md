@@ -7,10 +7,11 @@
 4. Features
 5. Testing
 6. Technologies Used
-7.
-8.
-9.
-10.
+7. Lighthouse Performance scores
+8. Deployment to Heroku
+9. Screenshots
+10. Credits and Resources
+11. Details
 
 ## Project Overview
 
@@ -107,3 +108,17 @@ screenshots of testing both js and python and results
 
 
   4. Admin.html
+
+
+## Deployment to Heroku
+
+awaiting support
+
+
+## Screenshots
+
+
+## Details
+  - ### Jon Williams
+  - ### [Github](https://github.com/JonOwenWilliams)
+  - ### [Github Repository](https://github.com/JonOwenWilliams/Code_Cuisine)
